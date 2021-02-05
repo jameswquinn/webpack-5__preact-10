@@ -28,7 +28,6 @@ module.exports = (env, argv) => {
 
 
     return {
-        mode: 'production',
         entry: path.resolve(__dirname, "src/main"),
         target: 'web', // <=== can be omitted as default is 'web'
         output: {

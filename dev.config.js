@@ -5,9 +5,7 @@ module.exports = (env, argv) => {
 
     const htmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-    const { CleanWebpackPlugin } = require("clean-webpack-plugin");
     const autoprefixer = require("autoprefixer");
-    const TerserPlugin = require("terser-webpack-plugin");
     const webpack = require("webpack");
     const path = require("path");
 
@@ -100,15 +98,6 @@ module.exports = (env, argv) => {
                         outputPath: "fonts"
                     }
                 },
-                // {
-                //     test: /\.(png|jpe?g|gif|webm|mp4|svg)$/,
-                //     loader: "file-loader",
-                //     options: {
-                //         context: "src/assets/img",
-                //         name: "[path][name][contenthash].[ext]",
-                //         outputPath: "img"
-                //     }
-                // }
                 {
                     test: /\.(jpe?g|png)$/i,
                     loader: "responsive-loader",
@@ -120,32 +109,13 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new webpack.ProgressPlugin(),
-            new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
-                filename: "css/[name][contenthash].css"
+                filename: "css/[name][contenthash:5].css"
             }),
-
             new htmlWebpackPlugin({
                 template: path.resolve(__dirname, "public", "index.html"),
-                favicon: "./public/favicon.ico"
             })
         ],
-        optimization: {
-            minimize: production,
-            minimizer: [
-                new TerserPlugin({
-                    parallel: true,
-                    terserOptions: {
-                        toplevel: true,
-                        output: {
-                            beautify: false
-                        }
-                    }
-                })
-            ],
-            sideEffects: true
-        },
-
         performance: {
             hints: false
         },
