@@ -28,10 +28,11 @@ module.exports = (env, argv) => {
 
 
     return {
+        mode: 'production',
         entry: path.resolve(__dirname, "src/main"),
         target: 'web', // <=== can be omitted as default is 'web'
         output: {
-            filename: "js/[name][contenthash].js",
+            filename: "js/[name][contenthash:5].js",
             path: path.resolve(__dirname, "dist/"),
             publicPath: "/"
         },
@@ -103,17 +104,26 @@ module.exports = (env, argv) => {
                     loader: "file-loader",
                     options: {
                         context: "src/assets/fonts",
-                        name: "[path][name][contenthash][.[ext]",
+                        name: "[path][name][contenthash:4][.[ext]",
                         outputPath: "fonts"
+                    }
+                }, {
+                    test: /\.(webm|mp4)$/,
+                    loader: "file-loader",
+                    options: {
+                        context: "src/assets/video",
+                        name: "[path][name][contenthash:4].[ext]",
+                        outputPath: "video"
                     }
                 },
                 {
-                    test: /\.(png|jpe?g|gif|webm|mp4|svg)$/,
-                    loader: "file-loader",
+                    test: /\.(jpe?g|png)$/i,
+                    loader: "responsive-loader",
                     options: {
-                        context: "src/assets/img",
-                        name: "[path][name][contenthash].[ext]",
-                        outputPath: "img"
+                        adapter: require("responsive-loader/sharp"),
+                        quality: 70,
+                        name: "[name][contenthash:4].[ext]",
+                        outputPath: "imgs"
                     }
                 }
             ]
@@ -122,7 +132,7 @@ module.exports = (env, argv) => {
             new webpack.ProgressPlugin(),
             new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
-                filename: "css/[name][contenthash].css"
+                filename: "css/[name][contenthash:5].css"
             }),
             new PurgeCSSPlugin({
                 paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
@@ -137,8 +147,8 @@ module.exports = (env, argv) => {
                 target: 'index-critical.html',
                 inlineGoogleFonts: true,
                 minify: true,
-                ignoreStylesheets: [/bootstrap/],
-                whitelist: /#foo|\.bar/
+                // ignoreStylesheets: [/bootstrap/],
+                // whitelist: /#foo|\.bar/
             }),
             new BrotliPlugin({
                 asset: "[path].br[query]",

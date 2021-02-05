@@ -100,15 +100,22 @@ module.exports = (env, argv) => {
                         outputPath: "fonts"
                     }
                 },
+                // {
+                //     test: /\.(png|jpe?g|gif|webm|mp4|svg)$/,
+                //     loader: "file-loader",
+                //     options: {
+                //         context: "src/assets/img",
+                //         name: "[path][name][contenthash].[ext]",
+                //         outputPath: "img"
+                //     }
+                // }
                 {
-                    test: /\.(png|jpe?g|gif|webm|mp4|svg)$/,
-                    loader: "file-loader",
+                    test: /\.(jpe?g|png)$/i,
+                    loader: "responsive-loader",
                     options: {
-                        context: "src/assets/img",
-                        name: "[path][name][contenthash].[ext]",
-                        outputPath: "img"
+                        disable: true
                     }
-                }
+                },
             ]
         },
         plugins: [
