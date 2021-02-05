@@ -150,16 +150,29 @@ module.exports = (env, argv) => {
                 start_url: ".",
                 fingerprints: false,
                 inject: true,
-                icons: [
+                icons: [{
+                        src: path.resolve('public/icons/icon.png'),
+                        sizes: [16, 32] // multiple sizes
+                    },
 
                     {
                         src: path.resolve('public/icons/icon.png'),
-                        sizes: [16, 32, 180, 256, 384, 512] // multiple sizes
+                        sizes: [120, 152, 167, 180, 1024],
+                        destination: path.join('icons', 'ios'),
+                        ios: true
                     },
 
                     {
                         src: path.resolve('public/icons/large-icon.png'),
-                        size: '1024x1024' // you can also use the specifications pattern
+                        size: 1024,
+                        destination: path.join('icons', 'ios'),
+                        ios: 'startup'
+                    },
+
+                    {
+                        src: path.resolve('public/icons/icon.png'),
+                        sizes: [36, 48, 72, 96, 144, 192, 512],
+                        destination: path.join('icons', 'android')
                     },
 
                     {

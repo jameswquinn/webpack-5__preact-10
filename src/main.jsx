@@ -8,11 +8,10 @@ console.log("hello world");
 
 /** @jsx h */
 import { h, render, Fragment } from "preact";
+import Helmet from "preact-helmet";
 
-import responsiveImage from './image.jpg?sizes[]=300,sizes[]=600,sizes[]=1024,sizes[]=2048';
-import responsiveImageWebp from './image.jpg?sizes[]=300,sizes[]=600,sizes[]=1024,sizes[]=2048&format=webp';
-
-
+import responsiveImage from './image.jpg?min=375,max=1024,steps=3';
+import responsiveImageWebp from './image.jpg?min=375,max=1024,steps=3&format=webp';
 
 
 
@@ -23,13 +22,20 @@ import './styles'
 const App = () => {
     return (
         <Fragment>
+            <Helmet
+                title="My Title"
+                meta={[
+                    { name: "description", content: "Helmet application" }
+                ]}
+            />
             <h1>Hello world</h1>
             <picture>
                 <source srcSet={responsiveImageWebp.srcSet} type='image/webp' />
                 <img
-                    src={responsiveImage.src}
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
                     srcSet={responsiveImage.srcSet}
-                    sizes='(min-width: 1024px) 1024px, 100vw'
+                    data-sizes="auto"
+                    alt='artist'
                     loading="lazy"
                 />
             </picture>

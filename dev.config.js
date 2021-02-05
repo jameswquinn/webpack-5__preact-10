@@ -102,9 +102,12 @@ module.exports = (env, argv) => {
                     test: /\.(jpe?g|png)$/i,
                     loader: "responsive-loader",
                     options: {
-                        disable: true
+                        adapter: require("responsive-loader/sharp"),
+                        quality: 70,
+                        name: "[name].[ext]",
+                        outputPath: "imgs"
                     }
-                },
+                }
             ]
         },
         plugins: [
