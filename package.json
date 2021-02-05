@@ -40,7 +40,8 @@
         "webpack": "^5.20.2",
         "webpack-cli": "^4.5.0",
         "webpack-critical-css-inliner": "^1.1.1",
-        "webpack-dev-server": "^3.11.2"
+        "webpack-dev-server": "^3.11.2",
+        "webpack-pwa-manifest": "^4.3.0"
     },
     "browserslist": [
         "> 1%",

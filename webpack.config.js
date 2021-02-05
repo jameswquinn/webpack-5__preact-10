@@ -5,6 +5,7 @@ module.exports = (env, argv) => {
 
     const htmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+    const WebpackPwaManifest = require('webpack-pwa-manifest');
     const PurgeCSSPlugin = require('purgecss-webpack-plugin');
     const WebpackCriticalCSSInliner = require('webpack-critical-css-inliner');
     const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -136,9 +137,39 @@ module.exports = (env, argv) => {
             new PurgeCSSPlugin({
                 paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
             }),
+            new WebpackPwaManifest({
+                name: 'My Progressive Web App',
+                short_name: 'MyPWA',
+                description: 'My awesome Progressive Web App!',
+                orientation: "portrait",
+                display: "standalone",
+                background_color: '#ffffff',
+                theme_color: '#000000',
+                crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+                start_url: ".",
+                fingerprints: false,
+                inject: true,
+                icons: [
+
+                    {
+                        src: path.resolve('public/icons/icon.png'),
+                        sizes: [16, 32, 180, 256, 384, 512] // multiple sizes
+                    },
+
+                    {
+                        src: path.resolve('public/icons/large-icon.png'),
+                        size: '1024x1024' // you can also use the specifications pattern
+                    },
+
+                    {
+                        src: path.resolve('public/icons/maskable-icon.png'),
+                        size: '1024x1024',
+                        purpose: 'maskable'
+                    }
+                ]
+            }),
             new htmlWebpackPlugin({
                 template: path.resolve(__dirname, "public", "index.html"),
-                favicon: "./public/favicon.ico"
             }),
             new WebpackCriticalCSSInliner({
                 base: 'dist/',
