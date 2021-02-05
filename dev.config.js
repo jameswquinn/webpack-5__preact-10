@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
         entry: path.resolve(__dirname, "src/main"),
         target: 'web', // <=== can be omitted as default is 'web'
         output: {
-            filename: "js/[name][contenthash].js",
+            filename: "js/[name].js",
             path: path.resolve(__dirname, "dist/"),
             publicPath: "/"
         },
@@ -94,7 +94,7 @@ module.exports = (env, argv) => {
                     loader: "file-loader",
                     options: {
                         context: "src/assets/fonts",
-                        name: "[path][name][contenthash][.[ext]",
+                        name: "[path][name].[ext]",
                         outputPath: "fonts"
                     }
                 },
@@ -110,7 +110,7 @@ module.exports = (env, argv) => {
         plugins: [
             new webpack.ProgressPlugin(),
             new MiniCssExtractPlugin({
-                filename: "css/[name][contenthash:5].css"
+                filename: "css/[name].css"
             }),
             new htmlWebpackPlugin({
                 template: path.resolve(__dirname, "public", "index.html"),
