@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "build": "webpack",
-        "start": "webpack serve --mode development --hot"
+        "start": "webpack serve --config dev.config.js --mode development --hot"
     },
     "keywords": [],
     "author": "",
