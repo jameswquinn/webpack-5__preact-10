@@ -12,6 +12,7 @@ module.exports = (env, argv) => {
     const autoprefixer = require("autoprefixer");
     const TerserPlugin = require("terser-webpack-plugin");
     const BrotliPlugin = require("brotli-webpack-plugin");
+    const { GenerateSW } = require('workbox-webpack-plugin');
     const webpack = require("webpack");
     const path = require("path");
     const glob = require('glob')
@@ -185,7 +186,8 @@ module.exports = (env, argv) => {
                 test: /\.js$|\.css$|\.svg$|\.html$/,
                 threshold: 10240,
                 minRatio: 0.7
-            })
+            }),
+            new GenerateSW()
         ],
         optimization: {
             minimize: production,
