@@ -35,9 +35,14 @@ const App = () => {
         //     }
         //     document.head.append(el);
         // };
-        // Add mata file
+
+//         // Add mata file
         addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
+
+        addTag('meta', { property: "og:title", content: "PreactX" });
         addTag('meta', { property: "og:type", content: "article" });
+        addTag('meta', { property: "og:url", content: location.origin })
+        addTag('meta', { property: "og:image", content: location.origin + responsiveImage.src })
     });
 
 
