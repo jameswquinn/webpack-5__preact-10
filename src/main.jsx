@@ -8,6 +8,7 @@ console.log("hello world");
 
 /** @jsx h */
 import { h, render, Fragment } from "preact";
+import { addTag } from "../helper"
 import { useEffect } from "preact/hooks"
 
 
@@ -26,19 +27,17 @@ const App = () => {
     useEffect(() => {
         document.title = `"Welcome James | 💭"`;
 
-         const addTag = (name, attributes) => {
-            var el = document.createElement(name),
-                attrName;
-            for (attrName in attributes) {
-                el.setAttribute(attrName, attributes[attrName]);
-            }
-            document.head.append(el);
-        };
+        // const addTag = (name, attributes) => {
+        //     var el = document.createElement(name),
+        //         attrName;
+        //     for (attrName in attributes) {
+        //         el.setAttribute(attrName, attributes[attrName]);
+        //     }
+        //     document.head.append(el);
+        // };
         // Add mata file
         addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
         addTag('meta', { property: "og:type", content: "article" });
-        // Overwrite meta description file
-        // document.getElementsByTagName("meta").description.setAttribute('content','My Meta Description Here')
     });
 
 
