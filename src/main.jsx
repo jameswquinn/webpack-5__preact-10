@@ -4,11 +4,14 @@ console.log("hello world");
 // import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
 // import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
 // import { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
-
+// import { useMeta, useLink, useLang, useTitle, useTitleTemplate } from 'hoofd/preact';
 
 /** @jsx h */
 import { h, render, Fragment } from "preact";
-import Helmet from "preact-helmet";
+import { useEffect } from "preact/hooks"
+
+
+
 
 import responsiveImage from './image.jpg?min=375,max=1024,steps=3';
 import responsiveImageWebp from './image.jpg?min=375,max=1024,steps=3&format=webp';
@@ -20,14 +23,27 @@ import './styles'
 
 
 const App = () => {
+    useEffect(() => {
+        document.title = `"Welcome James | 💭"`;
+
+         const addTag = (name, attributes) => {
+            var el = document.createElement(name),
+                attrName;
+            for (attrName in attributes) {
+                el.setAttribute(attrName, attributes[attrName]);
+            }
+            document.head.append(el);
+        };
+        // Add mata file
+        addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
+        addTag('meta', { property: "og:type", content: "article" });
+        // Overwrite meta description file
+        // document.getElementsByTagName("meta").description.setAttribute('content','My Meta Description Here')
+    });
+
+
     return (
         <Fragment>
-            <Helmet
-                title="My Title"
-                meta={[
-                    { name: "description", content: "Helmet application" }
-                ]}
-            />
             <h1>Hello world</h1>
             <picture>
                 <source srcSet={responsiveImageWebp.srcSet} type='image/webp' />

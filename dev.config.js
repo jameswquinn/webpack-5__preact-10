@@ -27,7 +27,7 @@ module.exports = (env, argv) => {
             publicPath: "/"
         },
         resolve: {
-            extensions: [".js", ".jsx", ".css", ".sccs"],
+            extensions: [".tsx", ".ts", ".js", ".jsx", ".css", ".sccs"],
             alias: {
                 react: "preact/compat",
                 "react-dom": "preact/compat",
@@ -58,6 +58,11 @@ module.exports = (env, argv) => {
                             babelrc: false
                         }
                     }
+                },
+                {
+                    test: /\.tsx?$/,
+                    use: 'ts-loader',
+                    exclude: /node_modules/,
                 },
                 {
                     test: /\.css$/,

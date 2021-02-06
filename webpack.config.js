@@ -13,6 +13,8 @@ module.exports = (env, argv) => {
     const TerserPlugin = require("terser-webpack-plugin");
     const BrotliPlugin = require("brotli-webpack-plugin");
     const { GenerateSW } = require('workbox-webpack-plugin');
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+    const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
     const webpack = require("webpack");
     const path = require("path");
     const glob = require('glob')
@@ -38,7 +40,7 @@ module.exports = (env, argv) => {
             publicPath: "/"
         },
         resolve: {
-            extensions: [".js", ".jsx", ".css", ".sccs"],
+            extensions: [".tsx", ".ts", ".js", ".jsx", ".css", ".sccs"],
             alias: {
                 react: "preact/compat",
                 "react-dom": "preact/compat",
@@ -69,6 +71,11 @@ module.exports = (env, argv) => {
                             babelrc: false
                         }
                     }
+                },
+                {
+                    test: /\.tsx?$/,
+                    use: 'ts-loader',
+                    exclude: /node_modules/,
                 },
                 {
                     test: /\.css$/,
@@ -200,7 +207,9 @@ module.exports = (env, argv) => {
                 threshold: 10240,
                 minRatio: 0.7
             }),
-            new GenerateSW()
+            new GenerateSW(),
+            new WebpackBuildNotifierPlugin(),
+            new BundleAnalyzerPlugin()
         ],
         optimization: {
             minimize: production,
