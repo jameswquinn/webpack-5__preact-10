@@ -129,6 +129,7 @@ module.exports = (env, argv) => {
                     loader: "responsive-loader",
                     options: {
                         adapter: require("responsive-loader/sharp"),
+                        esModule: true,
                         quality: 70,
                         name: "[name][contenthash:4].[ext]",
                         outputPath: "imgs"
