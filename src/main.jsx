@@ -39,10 +39,17 @@ const App = () => {
 //         // Add mata file
         addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
 
+
+        // og:title - The title of your object as it should appear within the graph, e.g., "PreactX".
+        // og:type - The type of your object, e.g., "video.movie". Depending on the type you specify, other properties may also be required.
+        // og:image - An image URL which should represent your object within the graph.
+        // og:url - The canonical URL of your object that will be used as its permanent ID in the graph, e.g., "https://www.example.com/".
+
+
         addTag('meta', { property: "og:title", content: "PreactX" });
         addTag('meta', { property: "og:type", content: "article" });
-        addTag('meta', { property: "og:url", content: location.origin })
         addTag('meta', { property: "og:image", content: location.origin + responsiveImage.src })
+        addTag('meta', { property: "og:url", content: location.origin })
     });
 
 
