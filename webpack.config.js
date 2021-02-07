@@ -12,6 +12,7 @@ module.exports = (env, argv) => {
     const autoprefixer = require("autoprefixer");
     const TerserPlugin = require("terser-webpack-plugin");
     const BrotliPlugin = require("brotli-webpack-plugin");
+    const CopyPlugin = require("copy-webpack-plugin");
     const { GenerateSW } = require('workbox-webpack-plugin');
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
     const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
@@ -160,11 +161,6 @@ module.exports = (env, argv) => {
                 inject: true,
                 icons: [{
                         src: path.resolve('public/icons/icon.png'),
-                        sizes: [16, 32] // multiple sizes
-                    },
-
-                    {
-                        src: path.resolve('public/icons/icon.png'),
                         sizes: [120, 152, 167, 180, 1024],
                         destination: path.join('icons', 'ios'),
                         ios: true
@@ -189,6 +185,11 @@ module.exports = (env, argv) => {
                         purpose: 'maskable'
                     }
                 ]
+            }),
+            new CopyPlugin({
+                patterns: [
+                    { from: path.resolve(__dirname, "public/favicon"), to: "favicon" }
+                ],
             }),
             new htmlWebpackPlugin({
                 template: path.resolve(__dirname, "public", "index.html"),

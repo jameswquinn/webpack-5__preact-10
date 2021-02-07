@@ -4,12 +4,13 @@ console.log("hello world");
 // import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
 // import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
 // import { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
-// import { useMeta, useLink, useLang, useTitle, useTitleTemplate } from 'hoofd/preact';
+
 
 // /** @jsx h */
 import { h, render, Fragment } from "preact";
-import { addTag } from "../helper"
-import { useEffect } from "preact/hooks"
+import { addTag } from "../helper";
+import { useEffect } from "preact/hooks";
+import { Router, route } from 'preact-router';
 
 
 
@@ -22,9 +23,20 @@ import responsiveImageWebp from './image.jpg?min=375,max=1024,steps=3&format=web
 
 import './styles'
 
+const Home = () => {
+    return (
+        <Fragment>
+            <h1>Home | James </h1>
+        </Fragment>
+    )
+}
+
 
 const App = () => {
+
+
     useEffect(() => {
+
         document.title = `"Welcome James | 💭"`;
 
         // const addTag = (name, attributes) => {
@@ -36,7 +48,7 @@ const App = () => {
         //     document.head.append(el);
         // };
 
-//         // Add mata file
+        //         // Add mata file
         addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
 
 
@@ -50,7 +62,21 @@ const App = () => {
         addTag('meta', { property: "og:type", content: "article" });
         addTag('meta', { property: "og:image", content: location.origin + responsiveImage.src })
         addTag('meta', { property: "og:url", content: location.origin })
+
+
+        addTag('base', { target: "_blank", href: location.origin })
     });
+    // some method that returns a promise
+    // isAuthenticated() { }
+
+    // handleRoute = async e => {
+    //     switch (e.url) {
+    //         case '/profile':
+    //             const isAuthed = await this.isAuthenticated();
+    //             if (!isAuthed) route('/', true);
+    //             break;
+    //     }
+    // };
 
 
     return (
@@ -66,9 +92,15 @@ const App = () => {
                     loading="lazy"
                 />
             </picture>
+
+
+
+            <Router>
+                <Home path='/' />
+            </Router>
         </Fragment>
     )
 };
 
 
-render(<App />, document.body, document.body.querySelector("#root"));
+render(<App />, document.body, document.getElementById("root"));
