@@ -6,7 +6,7 @@ console.log("hello world");
 // import { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
 // import { useMeta, useLink, useLang, useTitle, useTitleTemplate } from 'hoofd/preact';
 
-/** @jsx h */
+// /** @jsx h */
 import { h, render, Fragment } from "preact";
 import { addTag } from "../helper"
 import { useEffect } from "preact/hooks"
@@ -69,7 +69,6 @@ const App = () => {
         </Fragment>
     )
 };
-
 
 
 render(<App />, document.body, document.body.querySelector("#root"));
