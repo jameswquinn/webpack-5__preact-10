@@ -9,19 +9,24 @@ console.log("hello world");
 // /** @jsx h */
 import { h, render, Fragment } from "preact";
 import { addTag } from "../helper";
-import { useEffect } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import { Router, route } from 'preact-router';
 
+import lazySizes from 'lazysizes';
+import 'lazysizes/plugins/attrchange/ls.attrchange';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+
+import { format } from 'timeago.js';
 
 
-
-import responsiveImage from './image.jpg?min=375,max=1024,steps=3';
-import responsiveImageWebp from './image.jpg?min=375,max=1024,steps=3&format=webp';
+import responsiveImage from './image.jpg?min=640,max=1280,steps=3';
+import responsiveImageWebp from './image.jpg?min=640,max=1280,steps=3&format=webp';
 
 
 
 
 import './styles'
+
 
 const Home = () => {
     return (
@@ -34,8 +39,11 @@ const Home = () => {
 
 const App = () => {
 
+    const refTimeago = useRef(format(1612800105910));    
 
     useEffect(() => {
+
+    
 
         document.title = `"Welcome James | 💭"`;
 
@@ -63,9 +71,11 @@ const App = () => {
         addTag('meta', { property: "og:image", content: location.origin + responsiveImage.src })
         addTag('meta', { property: "og:url", content: location.origin })
 
-
         addTag('base', { target: "_blank", href: location.origin })
-    });
+        addTag('link', { rel: "canonical", href: location.origin})
+
+        
+    },[]);
     // some method that returns a promise
     // isAuthenticated() { }
 
@@ -83,15 +93,21 @@ const App = () => {
         <Fragment>
             <h1>Hello world</h1>
             <picture>
-                <source srcSet={responsiveImageWebp.srcSet} type='image/webp' />
+                <source data-srcset={responsiveImageWebp.srcSet} type='image/webp' />
                 <img
-                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                    srcSet={responsiveImage.srcSet}
-                    data-sizes="auto"
+                    data-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                    // width={responsiveImage.width}
+                    // height={responsiveImage.height}
+                    data-srcset={responsiveImage.srcSet}
+                    data-sizes="100vw"
                     alt='artist'
-                    loading="lazy"
+                    class="lazyload"
                 />
             </picture>
+            <span>
+                Updated {refTimeago.current}
+            </span>
+
 
 
 

@@ -13,11 +13,13 @@
         "core-js": "^3.6.5",
         "hoofd": "^1.0.2",
         "http-server": "^0.12.3",
+        "lazysizes": "^5.3.0",
         "preact": "^10.5.12",
         "preact-async-route": "^2.2.1",
         "preact-helmet": "^4.0.0-alpha-3",
         "preact-render-to-string": "^5.1.12",
-        "preact-router": "^3.2.1"
+        "preact-router": "^3.2.1",
+        "timeago.js": "^4.0.2"
     },
     "devDependencies": {
         "@babel/plugin-proposal-object-rest-spread": "^7.12.13",

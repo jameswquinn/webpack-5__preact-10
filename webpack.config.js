@@ -161,24 +161,25 @@ module.exports = (env, argv) => {
                 inject: true,
                 icons: [{
                         src: path.resolve('public/icons/icon.png'),
+                        sizes: [16, 32],
+                        destination: path.join('favicon'),
+                    }, {
+                        src: path.resolve('public/icons/icon.png'),
                         sizes: [120, 152, 167, 180, 1024],
                         destination: path.join('icons', 'ios'),
                         ios: true
                     },
-
                     {
                         src: path.resolve('public/icons/large-icon.png'),
                         size: 1024,
                         destination: path.join('icons', 'ios'),
                         ios: 'startup'
                     },
-
                     {
                         src: path.resolve('public/icons/icon.png'),
                         sizes: [36, 48, 72, 96, 144, 192, 512],
                         destination: path.join('icons', 'android')
                     },
-
                     {
                         src: path.resolve('public/icons/maskable-icon.png'),
                         size: '1024x1024',
@@ -188,7 +189,7 @@ module.exports = (env, argv) => {
             }),
             new CopyPlugin({
                 patterns: [
-                    { from: path.resolve(__dirname, "public/favicon"), to: "favicon" }
+                    { from: path.resolve(__dirname, "src/robots.txt"), to: "robots.txt" }
                 ],
             }),
             new htmlWebpackPlugin({
