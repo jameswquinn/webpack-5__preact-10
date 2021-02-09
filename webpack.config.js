@@ -198,7 +198,7 @@ module.exports = (env, argv) => {
             new WebpackCriticalCSSInliner({
                 base: 'dist/',
                 src: 'index.html',
-                target: 'index-critical.html',
+                target: 'index.html',
                 inlineGoogleFonts: true,
                 minify: true,
                 // ignoreStylesheets: [/bootstrap/],
