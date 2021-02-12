@@ -202,7 +202,8 @@ module.exports = (env, argv) => {
                 inlineGoogleFonts: true,
                 minify: true,
                 // ignoreStylesheets: [/bootstrap/],
-                // whitelist: /#foo|\.bar/
+                // whitelist: /@font-face|\:root/
+                // whitelist: /@font-face/
             }),
             new BrotliPlugin({
                 asset: "[path].br[query]",
