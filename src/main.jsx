@@ -1,79 +1,53 @@
-console.log("hello world");
-
 // /** @jsx h */
 // import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
 // import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
-// import { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
+// import React,{ unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
+
+/** @jsx h */
+import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
+import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
+import React,{ unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
 
 
-// /** @jsx h */
-import { h, render, Fragment } from "preact";
-import { addTag } from "../helper";
-import { useEffect, useRef } from "preact/hooks";
-import { Router } from 'preact-router';
-import 'lazysizes/plugins/attrchange/ls.attrchange';
-import 'lazysizes/plugins/parent-fit/ls.parent-fit';
-import { format } from 'timeago.js';
-import responsiveImage from './image.jpg?min=640,max=1280,steps=3';
-import responsiveImageWebp from './image.jpg?min=640,max=1280,steps=3&format=webp';
 
-import './styles'
+import { clamp } from 'lodash-es'
+import swap from 'lodash-move'
+import { useGesture } from 'react-use-gesture'
+import { useSprings, animated, interpolate } from 'react-spring'
+import './styles.css'
 
-const Home = () => {
-    return (
-        <Fragment>
-            <h1>Home | James </h1>
-        </Fragment>
-    )
+// Returns fitting styles for dragged/idle items
+const fn = (order, down, originalIndex, curIndex, y) => index =>
+  down && index === originalIndex
+    ? { y: curIndex * 100 + y, scale: 1.1, zIndex: '1', shadow: 15, immediate: n => n === 'y' || n === 'zIndex' }
+    : { y: order.indexOf(index) * 100, scale: 1, zIndex: '0', shadow: 1, immediate: false }
+
+function DraggableList({ items }) {
+  const order = useRef(items.map((_, index) => index)) // Store indicies as a local ref, this represents the item order
+  const [springs, setSprings] = useSprings(items.length, fn(order.current)) // Create springs, each corresponds to an item, controlling its transform, scale, etc.
+  const bind = useGesture(({ args: [originalIndex], down, delta: [, y] }) => {
+    const curIndex = order.current.indexOf(originalIndex)
+    const curRow = clamp(Math.round((curIndex * 100 + y) / 100), 0, items.length - 1)
+    const newOrder = swap(order.current, curIndex, curRow)
+    setSprings(fn(newOrder, down, originalIndex, curIndex, y)) // Feed springs new style data, they'll animate the view without causing a single render
+    if (!down) order.current = newOrder
+  })
+  return (
+    <div className="content" style={{ height: items.length * 100 }}>
+      {springs.map(({ zIndex, shadow, y, scale }, i) => (
+        <animated.div
+          {...bind(i)}
+          key={i}
+          style={{
+            zIndex,
+            boxShadow: shadow.interpolate(s => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`),
+            transform: interpolate([y, scale], (y, s) => `translate3d(0,${y}px,0) scale(${s})`)
+          }}
+          children={items[i]}
+        />
+      ))}
+    </div>
+  )
 }
 
-
-const App = () => {
-
-    const refTimeago = useRef(format(1612800105910));    
-
-    useEffect(() => {
-
-        document.title = `"Welcome James | 💭"`;
-
-        addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
-        addTag('meta', { property: "og:title", content: "PreactX" });
-        addTag('meta', { property: "og:type", content: "article" });
-        addTag('meta', { property: "og:image", content: location.origin + responsiveImage.src })
-        addTag('meta', { property: "og:url", content: location.origin })
-        addTag('base', { target: "_blank", href: location.origin })
-        addTag('link', { rel: "canonical", href: location.origin })  
-
-    },[]);
-
-    return (
-        <Fragment>
-            <h1>Hello world</h1>
-            <picture>
-                <source data-srcset={responsiveImageWebp.srcSet} type='image/webp' />
-                <img
-                    data-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                    // width={responsiveImage.width}
-                    // height={responsiveImage.height}
-                    data-srcset={responsiveImage.srcSet}
-                    data-sizes="100vw"
-                    alt='artist'
-                    class="lazyload"
-                />
-            </picture>
-            <span>
-                Updated {refTimeago.current}
-            </span>
-
-
-
-
-            <Router>
-                <Home path='/' />
-            </Router>
-        </Fragment>
-    )
-};
-
-
-render(<App />,document.getElementById("root"));
+render(<DraggableList items={'Lorem ipsum dolor sit'.split(' ')} />, document.getElementById('root'))
