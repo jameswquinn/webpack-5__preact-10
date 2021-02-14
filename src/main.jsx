@@ -1,95 +1,67 @@
-console.log("hello world");
-
-// /** @jsx h */
-// import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
-// import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
-// import { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
-
-
 // /** @jsx h */
 import { h, render, Fragment } from "preact";
-import { addTag } from "../helper";
 import { useEffect, useRef } from "preact/hooks";
-import { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
-import { Router } from 'preact-router';
-import 'lazysizes/plugins/attrchange/ls.attrchange';
+import { addTag } from "../helper";
+
+import chungHeiWebp from './img/chung-hei.jpg?min=480,max=1024,steps=3&format=webp';
+import jerryZhangWebp from './img/jerry-zhang.jpg?min=480,max=1024,steps=3&format=webp';
+
+import chungHei from './img/chung-hei.jpg?min=480,max=1024,steps=3';
+import jerryZhang from './img/jerry-zhang.jpg?min=480,max=1024,steps=3';
+
+
+import 'lazysizes';
+import 'lazysizes/plugins/bgset/ls.bgset';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
-import { format } from 'timeago.js';
-import responsiveImage from './image.jpg?min=640,max=1280,steps=3';
-import responsiveImageWebp from './image.jpg?min=640,max=1280,steps=3&format=webp';
 
-
-import {useSpring, animated} from 'react-spring'
-
-import './fonts'
-import './styles'
-
-const Home = () => {
-    return (
-        <Fragment>
-            <h1>Home | James </h1>
-        </Fragment>
-    )
-}
-
+import './styles.css'
+import './fonts.css'
 
 const App = () => {
-
-    const refTimeago = useRef(format(1612800105910));    
-
     useEffect(() => {
-
         document.title = `"Welcome James | 💭"`;
 
         addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
         addTag('meta', { property: "og:title", content: "PreactX" });
         addTag('meta', { property: "og:type", content: "article" });
-        addTag('meta', { property: "og:image", content: location.origin + responsiveImage.src })
-        addTag('meta', { property: "og:url", content: location.origin })
-        addTag('base', { target: "_blank", href: location.origin })
-        addTag('link', { rel: "canonical", href: location.origin })  
-
-    },[]);
-
-    const props = useSpring({
-        to: async (next, cancel) => {
-          await next({opacity: 1, color: '#ffaaee'})
-          await next({opacity: 0, color: 'rgb(14,26,19)'})
-        },
-        from: {opacity: 0, color: 'red'}
-      })
+        // addTag('meta', { property: "og:image", content: location.href + responsiveImage.src })
+        addTag('meta', { property: "og:url", content: location.href })
+        addTag('base', { target: "_blank", href: location.href })
+        addTag('link', { rel: "canonical", href: location.href })
+    }, [])
 
     return (
+
         <Fragment>
-            <animated.div style={props}>I will fade in and out</animated.div>
-            <h1>Hello world</h1>
-            <picture>
-                <source data-srcset={responsiveImageWebp.srcSet} type='image/webp' />
-                <img
-                    data-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
-                    // width={responsiveImage.width}
-                    // height={responsiveImage.height}
-                    data-srcset={responsiveImage.srcSet}
-                    data-sizes="100vw"
-                    alt='artist'
-                    class="lazyload"
-                />
-            </picture>
-            <i>
-                Updated {refTimeago.current}
-            </i>
+            <h3>background-size: contain</h3>
 
-            Hello from :root font is?
+            <p>created with lazySizes bgset and parent-fit plugins</p>
+            <div class="row">
+                <div class="outerbox">
+                    <div class="box ratio-container lazyload" data-sizes="auto" data-bgset={chungHeiWebp.srcSet}></div>
 
+                    
+                </div>
+                <div class="outerbox">
+                    <div class="box ratio-container lazyload" data-sizes="auto" data-bgset={jerryZhangWebp.srcSet}></div>
+                </div>
+            </div>
+            <h3>background-size: cover</h3>
 
+            <p>created with lazySizes bgset and parent-fit plugins</p>
+            <div class="row">
+                <div class="outerbox">
+                    <div class="box cover ratio-container lazyload" data-sizes="auto" data-bgset={chungHei.srcSet}></div>
 
-
-            <Router>
-                <Home path='/' />
-            </Router>
+                    
+                </div>
+                <div class="outerbox">
+                    <div class="box cover ratio-container lazyload" data-sizes="auto" data-bgset={jerryZhang.srcSet}></div>
+                </div>
+            </div>
         </Fragment>
     )
 };
 
 
-render(<App />,document.getElementById("root"));
+render(<App />, document.getElementById("root"));

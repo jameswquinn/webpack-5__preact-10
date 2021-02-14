@@ -14,6 +14,7 @@ module.exports = (env, argv) => {
     const BrotliPlugin = require("brotli-webpack-plugin");
     const CopyPlugin = require("copy-webpack-plugin");
     const { GenerateSW } = require('workbox-webpack-plugin');
+    const SizePlugin = require('size-plugin');
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
     const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
     const webpack = require("webpack");
@@ -131,7 +132,7 @@ module.exports = (env, argv) => {
                     options: {
                         adapter: require("responsive-loader/sharp"),
                         esModule: true,
-                        quality: 70,
+                        quality: 65,
                         name: "[name][contenthash:4].[ext]",
                         outputPath: "imgs"
                     }
@@ -157,6 +158,20 @@ module.exports = (env, argv) => {
                 theme_color: '#000000',
                 crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
                 start_url: ".",
+                share_target: {
+                    "action": "/share-photo",
+                    "method": "POST",
+                    "enctype": "multipart/form-data",
+                    "params": {
+                        "og:title": "name",
+                        "og:description": "description",
+                        "og:url": "link",
+                        "files": [{
+                            "name": "photos",
+                            "accept": "image/jpg"
+                        }]
+                    }
+                },
                 fingerprints: false,
                 inject: true,
                 icons: [{
@@ -212,8 +227,15 @@ module.exports = (env, argv) => {
                 minRatio: 0.7
             }),
             new GenerateSW(),
-            new WebpackBuildNotifierPlugin(),
-            new BundleAnalyzerPlugin()
+            new SizePlugin(),
+            new WebpackBuildNotifierPlugin({
+                title: "My Project Webpack Build",
+                logo: path.resolve("public/icons/icon.png"),
+                suppressSuccess: true
+            }),
+            new BundleAnalyzerPlugin({
+                analyzerMode: "static"
+            })
         ],
         optimization: {
             minimize: production,
