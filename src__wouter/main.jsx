@@ -1,40 +1,25 @@
 /* @jsx h */
 import { h, render } from "preact";
-import { useState, useEffect, useCallback } from "preact/hooks";
-import { Redirect, Switch, Route, Link, useRoute, Router } from "wouter-preact";
+import { Redirect, Switch, Route, Router, Link, useRoute } from "wouter-preact";
 
 import "./styles.css";
 
-// returns the current hash location (excluding the '#' symbol)
-const currentLoc = () => window.location.hash.replace("#", "") || "/";
-
-const useHashLocation = () => {
-  const [loc, setLoc] = useState(currentLoc());
-
-  useEffect(() => {
-    const handler = () => setLoc(currentLoc());
-
-    // subscribe on hash changes
-    window.addEventListener("hashchange", handler);
-    return () => window.removeEventListener("hashchange", handler);
-  }, []);
-
-  const navigate = useCallback(to => (window.location.hash = to), []);
-  return [loc, navigate];
-};
-
-const ActiveLink = props => {
+const ActiveLink = (props) => {
   const [isActive] = useRoute(props.href);
   return (
     <Link {...props}>
-      <a className={isActive ? "active" : ""}>{props.children}</a>
+      <a href="/" className={isActive ? "active" : ""}>
+        {props.children}
+      </a>
     </Link>
   );
 };
 
 function App() {
   return (
-    <Router hook={useHashLocation}>
+    <Router base="/app">
+      <Route path="~/" children={<Redirect to="/" />} />
+
       <div className="App">
         <nav>
           <ActiveLink href="/">Home</ActiveLink>
@@ -48,7 +33,7 @@ function App() {
             <Route path="/info">
               <Redirect to="/about" />
             </Route>
-            <Route path="/">This example uses hash-based routing.</Route>
+            <Route path="/">Wouter + Preact = ♡</Route>
             <Route path="/about">
               <article>
                 <h1>Wouter API</h1>

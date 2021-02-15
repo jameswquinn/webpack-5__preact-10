@@ -17,10 +17,13 @@
         "preact-async-route": "^2.2.1",
         "preact-render-to-string": "^5.1.12",
         "preact-router": "^3.2.1",
+        "react-router": "^5.2.0",
+        "react-router-dom": "^5.2.0",
         "react-spring": "^8.0.27",
         "react-use-gesture": "^9.0.4",
         "react-with-gesture": "^4.0.8",
-        "timeago.js": "^4.0.2"
+        "timeago.js": "^4.0.2",
+        "wouter-preact": "^2.7.3"
     },
     "devDependencies": {
         "@babel/plugin-proposal-object-rest-spread": "^7.12.13",

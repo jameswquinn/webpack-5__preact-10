@@ -202,24 +202,24 @@ module.exports = (env, argv) => {
                     }
                 ]
             }),
-            new CopyPlugin({
-                patterns: [
-                    { from: path.resolve(__dirname, "src/robots.txt"), to: "robots.txt" }
-                ],
-            }),
+            // new CopyPlugin({
+            //     patterns: [
+            //         { from: path.resolve(__dirname, "src/robots.txt"), to: "robots.txt" }
+            //     ],
+            // }),
             new htmlWebpackPlugin({
                 template: path.resolve(__dirname, "public", "index.html"),
             }),
-            new WebpackCriticalCSSInliner({
-                base: 'dist/',
-                src: 'index.html',
-                target: 'index.html',
-                inlineGoogleFonts: true,
-                minify: true,
-                // ignoreStylesheets: [/bootstrap/],
-                // whitelist: /@font-face|\:root/
-                // whitelist: /@font-face/
-            }),
+            // new WebpackCriticalCSSInliner({
+            //     base: 'dist/',
+            //     src: 'index.html',
+            //     target: 'index.html',
+            //     inlineGoogleFonts: true,
+            //     minify: true,
+            //     // ignoreStylesheets: [/bootstrap/],
+            //     // whitelist: /@font-face|\:root/
+            //     // whitelist: /@font-face/
+            // }),
             new BrotliPlugin({
                 asset: "[path].br[query]",
                 test: /\.js$|\.css$|\.svg$|\.html$/,
