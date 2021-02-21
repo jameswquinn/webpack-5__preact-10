@@ -57,11 +57,7 @@ module.exports = (env, argv) => {
                         options: {
                             presets: [
                                 // ["@babel/preset-modules"],
-                                ["@babel/preset-env", {
-                                    targets: {
-                                        esmodules: true
-                                    }
-                                }],
+                                ["@babel/preset-env"],
                                 [
                                     "@babel/preset-react",
                                     {

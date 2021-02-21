@@ -56,7 +56,6 @@ module.exports = (env, argv) => {
                         loader: "babel-loader",
                         options: {
                             presets: [
-                                // ["@babel/preset-modules"],
                                 ["@babel/preset-env", {
                                     targets: {
                                         esmodules: true
