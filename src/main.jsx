@@ -10,6 +10,7 @@ import { Redirect, Switch, Route, Router, Link, useRoute } from "wouter-preact";
 import lozad from "lozad";
 import { format } from 'timeago.js';
 // import Helmet from "preact-helmet";
+import { addTag } from "../helper";
 
 
 import "./styles.css";
@@ -61,13 +62,24 @@ const About = () => {
 }
 
 function App() {
+  useEffect(() => {
+    document.title = `"Welcome James | 💭"`;
+
+    addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
+    addTag('meta', { property: "og:title", content: "PreactX" });
+    addTag('meta', { property: "og:type", content: "article" });
+    addTag('meta', { property: "og:image", content: location.href + jerryZhang.src })
+    addTag('meta', { property: "og:url", content: location.href })
+    addTag('base', { target: "_blank", href: location.href })
+    addTag('link', { rel: "canonical", href: location.href })
+}, [])
   const refTimeago = useRef(format(1613942894028));
 
     return (
       <Fragment>
         {/* <Helmet title="My Title" /> */}
      
-      <Router base="/app">
+      <Router>
         <Route path="~/" children={<Redirect to="/" />} />
   
      <h1>James | Hay  Updated {refTimeago.current}</h1>
