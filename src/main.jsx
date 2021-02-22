@@ -7,13 +7,16 @@
 import { h, render, Fragment } from "preact";
 import { useEffect, useRef } from "preact/hooks"
 import { Redirect, Switch, Route, Router, Link, useRoute } from "wouter-preact";
-import lozad from "lozad";
+import lozad from './helper/lozad';
 import { format } from 'timeago.js';
 // import Helmet from "preact-helmet";
 import { addTag } from "../helper";
+import {useTitle} from '../hooks/useTitle';
 
 
 import "./styles.css";
+import chungHei from './img/chung-hei.jpg?min=480,max=1024,steps=3';
+import jerryZhang from './img/jerry-zhang.jpg?min=480,max=1024,steps=3';
 
 
 const ActiveLink = (props) => {
@@ -41,77 +44,86 @@ const About = () => {
 
   return (
     <div>
-      <h1 style={{ marginBottom: "200vh" }}>Scroll down!</h1>
+      <h1>Hello world</h1>
+
+      <img data-srcset={chungHei.srcSet}
+        data-src={chungHei.src}
+        style={{
+          display: "block",
+          height: "640px",
+          width: "640px"
+        }}
+        data-use-lozad
+      />
+            <img data-srcset={jerryZhang.srcSet}
+        data-src={jerryZhang.src}
+        style={{
+          display: "block",
+          height: "640px",
+          width: "640px"
+        }}
+        data-use-lozad
+      />
 
 
-      {Array.from(Array(100)).map((_, i) => (
-        <img
-          key={i}
-          alt={``}
-          style={{
-            display: "block",
-            height: "640px",
-            width: "640px"
-          }}
-          data-use-lozad
-          data-src={`https://picsum.photos/seed/${Math.random()}/300`}
-        />
-      ))}
+
+
     </div>
   );
 }
 
 function App() {
-  useEffect(() => {
-    document.title = `"Welcome James | 💭"`;
+  useTitle('Hello world! | Hay James I am here [Hay still here]');
+  // useEffect(() => {
+  //   document.title = `"Welcome James | 💭"`;
 
-    addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
-    addTag('meta', { property: "og:title", content: "PreactX" });
-    addTag('meta', { property: "og:type", content: "article" });
-    addTag('meta', { property: "og:image", content: location.href + jerryZhang.src })
-    addTag('meta', { property: "og:url", content: location.href })
-    addTag('base', { target: "_blank", href: location.href })
-    addTag('link', { rel: "canonical", href: location.href })
-}, [])
+  //   addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
+  //   addTag('meta', { property: "og:title", content: "PreactX" });
+  //   addTag('meta', { property: "og:type", content: "article" });
+  //   addTag('meta', { property: "og:image", content: location.href + jerryZhang.src })
+  //   addTag('meta', { property: "og:url", content: location.href })
+  //   addTag('base', { target: "_blank", href: location.href })
+  //   addTag('link', { rel: "canonical", href: location.href })
+  // }, [])
   const refTimeago = useRef(format(1613942894028));
 
-    return (
-      <Fragment>
-        {/* <Helmet title="My Title" /> */}
-     
+  return (
+    <Fragment>
+      {/* <Helmet title="My Title" /> */}
+
       <Router>
         <Route path="~/" children={<Redirect to="/" />} />
-  
-     <h1>James | Hay  Updated {refTimeago.current}</h1>
- 
-          <nav>
-            <ActiveLink href="/">Home</ActiveLink>
-            <ActiveLink href="/about">What is Wouter</ActiveLink>
-            <ActiveLink href="/faq">FAQ</ActiveLink>
-            <ActiveLink href="/info">More Info (redirect)</ActiveLink>
-          </nav>
-  
-          <main>
-            <Switch>
-              <Route path="/info">
-                <Redirect to="/about" />
-              </Route>
-              <Route path="/">Wouter + Preact = ♡</Route>
-              <Route path="/about" component={About} />
 
- 
-              <Route path="/:anything*">
-                <center>
-                  <b>404:</b> Sorry, this page isn't ready yet!
+        <h1>James | Hay  Updated {refTimeago.current}</h1>
+
+        <nav>
+          <ActiveLink href="/">Home</ActiveLink>
+          <ActiveLink href="/about">What is Wouter</ActiveLink>
+          <ActiveLink href="/faq">FAQ</ActiveLink>
+          <ActiveLink href="/info">More Info (redirect)</ActiveLink>
+        </nav>
+
+        <main>
+          <Switch>
+            <Route path="/info">
+              <Redirect to="/about" />
+            </Route>
+            <Route path="/">Wouter + Preact = ♡</Route>
+            <Route path="/about" component={About} />
+
+
+            <Route path="/:anything*">
+              <center>
+                <b>404:</b> Sorry, this page isn't ready yet!
                 </center>
-              </Route>
-            </Switch>
-          </main>
+            </Route>
+          </Switch>
+        </main>
 
       </Router>
-      </Fragment>
-    );
-  }
+    </Fragment>
+  );
+}
 
 
 const rootElement = document.getElementById("root");
