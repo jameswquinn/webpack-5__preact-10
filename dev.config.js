@@ -129,11 +129,23 @@ module.exports = (env, argv) => {
             hints: false
         },
         devServer: {
+            contentBase: path.join(__dirname, 'public'),
+            historyApiFallback: true,
+            clientLogLevel: 'silent',
+            disableHostCheck: true,
+            http2: true,
+            index: 'index.html',
+            compress: true,
             hot: true,
-            host: "127.0.0.1",
+            host: "0.0.0.0",
+            publicPath: '/',
+            quiet: true,
+            overlay: false,
+            // public: allowedHost,
+            // proxy,
             open: {
                 app: ['Google Chrome', '--incognito'],
-              }
+            }
         }
     };
 };
