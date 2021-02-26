@@ -4,7 +4,7 @@ export const addTag = (name, attributes) => {
     for (attrName in attributes) {
         el.setAttribute(attrName, attributes[attrName]);
     }
-    document.head.appendChild(el);
+    document.head.append(el);
 };
 
 {/* <meta property="og:image" content="/og-image.jpg">

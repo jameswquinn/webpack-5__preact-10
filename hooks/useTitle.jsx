@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'preact/hooks';
 
 
 const DEFAULT_USE_TITLE_OPTIONS = {
-  restoreOnUnmount: false,
+  restoreOnUnmount: true,
 };
 
 const useTitle = (title, options = DEFAULT_USE_TITLE_OPTIONS) => {
