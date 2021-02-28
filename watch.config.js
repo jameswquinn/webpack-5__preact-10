@@ -215,16 +215,16 @@ module.exports = (env, argv) => {
             new htmlWebpackPlugin({
                 template: path.resolve(__dirname, "public", "index.html"),
             }),
-            new WebpackCriticalCSSInliner({
-                base: 'dist/',
-                src: 'index.html',
-                target: 'index.html',
-                inlineGoogleFonts: true,
-                minify: true,
-                // ignoreStylesheets: [/bootstrap/],
-                // whitelist: /@font-face|\:root/
-                // whitelist: /@font-face/
-            }),
+            // new WebpackCriticalCSSInliner({
+            //     base: 'dist/',
+            //     src: 'index.html',
+            //     target: 'index.html',
+            //     inlineGoogleFonts: true,
+            //     minify: true,
+            //     // ignoreStylesheets: [/bootstrap/],
+            //     // whitelist: /@font-face|\:root/
+            //     // whitelist: /@font-face/
+            // }),
             new BrotliPlugin({
                 asset: "[path].br[query]",
                 test: /\.js$|\.css$|\.svg$|\.html$/,
@@ -232,15 +232,15 @@ module.exports = (env, argv) => {
                 minRatio: 0.7
             }),
             new GenerateSW(),
-            new SizePlugin(),
-            new WebpackBuildNotifierPlugin({
-                title: "My Project Webpack Build",
-                logo: path.resolve("public/icons/icon.png"),
-                suppressSuccess: true
-            }),
-            new BundleAnalyzerPlugin({
-                analyzerMode: "static"
-            })
+            // new SizePlugin(),
+            // new WebpackBuildNotifierPlugin({
+            //     title: "My Project Webpack Build",
+            //     logo: path.resolve("public/icons/icon.png"),
+            //     suppressSuccess: true
+            // }),
+            // new BundleAnalyzerPlugin({
+            //     analyzerMode: "static"
+            // })
         ],
         optimization: {
             minimize: production,
@@ -266,9 +266,10 @@ module.exports = (env, argv) => {
             hot: true,
             host: "0.0.0.0",
             quiet: true,
+            compress: true,
             overlay: false,
             historyApiFallback: true,
-            // https: true,
+            https: true,
             // https: {
             //     key: fs.readFileSync('/path/to/server.key'),
             //     cert: fs.readFileSync('/path/to/server.crt'),
@@ -277,6 +278,7 @@ module.exports = (env, argv) => {
             // proxy: {
             //     '/api': 'http://localhost:3000',
             //   },
+            // index: 'index.html',
             open: {
                 app: ['Google Chrome', '--incognito'],
             }

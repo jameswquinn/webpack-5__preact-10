@@ -134,9 +134,10 @@ module.exports = (env, argv) => {
             hot: true,
             host: "0.0.0.0",
             quiet: true,
+            compress: true,
             overlay: false,
             historyApiFallback: true,
-            // https: true,
+            https: true,
             // https: {
             //     key: fs.readFileSync('/path/to/server.key'),
             //     cert: fs.readFileSync('/path/to/server.crt'),
@@ -145,6 +146,7 @@ module.exports = (env, argv) => {
             // proxy: {
             //     '/api': 'http://localhost:3000',
             //   },
+            // index: 'index.html',
             open: {
                 app: ['Google Chrome', '--incognito'],
             }

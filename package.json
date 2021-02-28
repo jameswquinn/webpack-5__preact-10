@@ -4,7 +4,8 @@
     "description": "",
     "scripts": {
         "build": "webpack --mode production",
-        "start": "webpack serve --config dev.config.js --mode development --hot"
+        "start": "webpack serve --config dev.config.js --mode development --hot",
+        "watch": "webpack serve --config watch.config.js --mode development --hot"
     },
     "keywords": [],
     "author": "",
@@ -16,12 +17,8 @@
         "lozad": "^1.16.0",
         "path-to-regexp": "^6.2.0",
         "preact": "^10.5.12",
-        "preact-helmet": "^4.0.0-alpha-3",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
-        "siema": "^1.5.1",
+        "preact-transition-group": "^2.0.0",
         "timeago.js": "^4.0.2",
-        "wouter": "^2.7.3",
         "wouter-preact": "^2.7.3"
     },
     "devDependencies": {
