@@ -1,22 +1,16 @@
 // /** @jsx h */
 // import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
 // import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
-// import React,{ unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef, Children } from "preact/compat"
-// import {Switch, Route, Router, Link, useRoute, useRouter, useLocation } from "wouter-preact";
-// import makeCachedMatcher from "wouter-preact/matcher";
+// import React,{ unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
+
 
 /** @jsx h */
-import { h, Component, render, Fragment } from "preact";
-import { useEffect } from 'preact/hooks'
+import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
+import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
+import React,{ unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
 
-
-
-import {Route, Router, Link, useRoute, useRouter, useLocation } from "wouter-preact";
-// import Helmet from "preact-helmet";
-// import Helmet from './helmetHooks';
-// import { useMetaArray } from '../helper'
-
-
+import { Redirect, Switch, Route, Router, Link, useRoute, Link, useRouter, useLocation } from "wouter-preact";
+import Helmet from "preact-helmet";
 import "./styles.css";
 
 const Scope = props => {
@@ -49,80 +43,28 @@ const ActiveLink = props => {
   );
 };
 
-
-const About = () => {
-  useEffect(() => {
-    var things = {a: 1, b: 2, c: 3};
-    const meta = [{
-      property: "og:image",
-      content: "/og-image.jpg"
-  }, {
-      property: "og:image:width",
-      content: "1200"
-  }, {
-      property: "og:image:height",
-      content: "628"
-  }, {
-      property: "og:title",
-      content: "An awesome page"
-  }, {
-      property: "og:description",
-      content: "Everything you need to know about the topic you are looking for"
-  }, {
-      property: "og:url",
-      content: "http://example.com"
-  }]
-
-//   export const useMeta = (attributes) => {
-//     var el = document.createElement('meta'),
-//         attrName;
-//     for (attrName in attributes) {
-//         el.setAttribute(attrName, attributes[attrName]);
-//     }
-//     document.head.appendChild(el);
-// };
-
- 
-    const useMetaArray = (metaArray) => {
-      for (let attributes in metaArray) {
-        console.log(metaArray[attributes])
-        let prop = metaArray[attributes];
-        var el = document.createElement('meta'),
-          attrName;
-        for (let attrName in prop) {
-          el.setAttribute(attrName, prop[attrName]);
-        }
-        document.head.appendChild(el);
-      }
-    }
-  
-// export const useMetaArray = (metaTags) => {
-//   for (attributes in metaTags) {
-//       console.log(attrName)
-//       console.log(metaTags[attributes]);
-//       // var el = document.createElement('meta'),
-//       //     attrName;
-//       // for (attrName in metaTags[attributes]) {
-//       //     el.setAttribute(attrName, metaTags[attributes][attrName]);
-//       // }
-//       // document.head.appendChild(el);
-//   }
-// };
-
-
-useMetaArray(meta)
-
-  }, []);
-  return(
-    <Fragment>
-      About
-    </Fragment>
-  )
-}
-
 function App() {
   return (
     <div className="App">
+      <Helmet
+                title="My Title"
+                titleTemplate="MySite.com - %s"
+                defaultTitle="My Default Title"
+                titleAttributes={{itemprop: "name", lang: "en"}}
+                base={{target: "_blank", href: "http://mysite.com/"}}
+                meta={[
+                    {name: "description", content: "Helmet application"},
+                    {property: "og:type", content: "article"}
+                ]}
+
+                script={[
+                    {src: "http://include.com/pathtojs.js", type: "text/javascript"},
+                    {type: "application/ld+json", innerHTML: `{ "@context": "http://schema.org" }`}
+                ]}
+
+
+          
+            />
       <nav>
         <ActiveLink href="/">Home</ActiveLink>
         <ActiveLink href="/about">About</ActiveLink>
@@ -131,7 +73,7 @@ function App() {
 
       <main>
         <Route path="/">Welcome!</Route>
-        <Route path="/about" component={About}/>
+        <Route path="/about">About Us</Route>
 
         <Scope base="/help">
           <div>
@@ -177,6 +119,5 @@ function App() {
   );
 }
 
-
-  render(<App />, document.getElementById("root"));
-
+const rootElement = document.getElementById("root");
+render(<App />, rootElement);

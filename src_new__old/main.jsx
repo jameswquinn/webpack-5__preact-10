@@ -5,6 +5,11 @@ console.log("hello world");
 // import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
 // import { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
 
+/** @jsx h */
+import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
+import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
+import { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef } from "preact/compat"
+
 
 // /** @jsx h */
 import { h, render, Fragment } from "preact";
@@ -27,19 +32,31 @@ import responsiveImageWebp from './image.jpg?min=640,max=1280,steps=3&format=web
 
 import './fonts'
 import './styles'
+const example = [{
+    "property": "og:image",
+    "content": "/og-image.jpg"
+}, {
+    "property": "og:image:width",
+    "content": "1200"
+}, {
+    "property": "og:image:height",
+    "content": "628"
+}, {
+    "property": "og:title",
+    "content": "An awesome page"
+}, {
+    "property": "og:description",
+    "content": "Everything you need to know about the topic you are looking for"
+}, {
+    "property": "og:url",
+    "content": "http://example.com"
+}]
 
 
 const About = () => {
     useEffect(() => {
         document.title = `"Welcome James | 💭"`;
 
-        addTag('meta', { name: 'description', content: 'This article will explain how to add external and internal css and js files dynamically inside html head tag using javascript.Example: meta tag, javascript, css' });
-        addTag('meta', { property: "og:title", content: "PreactX" });
-        addTag('meta', { property: "og:type", content: "article" });
-        addTag('meta', { property: "og:image", content: location.href + responsiveImage.src })
-        addTag('meta', { property: "og:url", content: location.href })
-        addTag('base', { target: "_blank", href: location.href })
-        addTag('link', { rel: "canonical", href: location.href })
     }, [])
     return (
         <Fragment>
