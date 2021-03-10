@@ -8,8 +8,7 @@
 /** @jsx h */
 import { h, render, Fragment } from "preact";
 import { Route, Router, Link as NavLink, useRoute, useRouter, useLocation } from "wouter-preact";
-import { Head } from '../public/head/Head'
-// import ScriptJsonLD from '@s-ui/react-script-json-ld'
+import Head from '../public/head/Head'
 import "./styles.css";
 
 const Scope = props => {
@@ -42,17 +41,6 @@ const ActiveLink = props => {
     );
 };
 
-function ScriptJsonLD(_ref) {
-    var json = _ref.json;
-    return h(Fragment, {
-      children: json && h("script", {
-        dangerouslySetInnerHTML: {
-          __html: JSON.stringify(json)
-        },
-        type: "application/ld+json"
-      })
-    });
-  }
 
 const Home = () => {
     return (
@@ -81,37 +69,15 @@ const CreateHead = ({
             <meta name="twitter:description" content={description} />
             <meta name="twitter:image" content={image} />
             <meta name="description" content={description} />
+            <meta name="description" content={description} />
         </Head>
     )
 }
-
-
 
 const Abouts = () => {
     return (
         <Fragment>
             <CreateHead title="My page title | James" description="This page is super important" url={location.href} image="https://heikole-art.net/wp-content/uploads/2020/05/5D4_5892.jpg" />
-            <Head>
-                <ScriptJsonLD json={{
-                    '@context': 'http://schema.org',
-                    '@type': 'AutoDealer',
-                    name: 'Dealer name | James',
-                    address: {
-                        '@type': 'PostalAddress',
-                        streetAddress: 'Avda. Maresme, 133',
-                        postalCode: '08302',
-                        addressLocality: 'Mataró'
-                    },
-                    image:
-                        'https://a.ccdn.es/coches/store_images_profesionales/123456_13032018103554.jpg',
-                    telephone: ['123456789'],
-                    geo: {
-                        '@type': 'GeoCoordinates',
-                        latitude: '41.53194',
-                        longitude: '2.442895'
-                    }
-                }} />
-            </Head>
             from nested about
         </Fragment>
     )

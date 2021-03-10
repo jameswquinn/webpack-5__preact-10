@@ -6,10 +6,21 @@
 // import makeCachedMatcher from "wouter-preact/matcher";
 
 /** @jsx h */
-import { h, render, Fragment } from "preact";
+import { h, Component, render, Fragment } from "preact";
+import { useEffect, useLayoutEffect, useState } from 'preact/hooks'
+
+
+
 import { Route, Router, Link as NavLink, useRoute, useRouter, useLocation } from "wouter-preact";
-import { Head } from '../public/head/Head'
+import { HeadProvider, Title, Link, Meta } from 'react-head';
 // import ScriptJsonLD from '@s-ui/react-script-json-ld'
+// import { Person } from "schema-dts";
+// import { jsonLdScriptProps } from "react-schemaorg";
+// import Head from "next/head";
+// import Head from '../public/head/Head'
+// import CreateHead from '../public/head/HelperComponent'
+
+
 import "./styles.css";
 
 const Scope = props => {
@@ -42,17 +53,6 @@ const ActiveLink = props => {
     );
 };
 
-function ScriptJsonLD(_ref) {
-    var json = _ref.json;
-    return h(Fragment, {
-      children: json && h("script", {
-        dangerouslySetInnerHTML: {
-          __html: JSON.stringify(json)
-        },
-        type: "application/ld+json"
-      })
-    });
-  }
 
 const Home = () => {
     return (
@@ -62,60 +62,87 @@ const Home = () => {
     )
 }
 
-const CreateHead = ({
-    title = "No page title",
+// const autoDealerStructuredData = {
+//     '@context': 'http://schema.org',
+//     '@type': 'AutoDealer',
+//     name: 'Dealer name',
+//     address: {
+//       '@type': 'PostalAddress',
+//       streetAddress: 'Avda. Maresme, 133',
+//       postalCode: '08302',
+//       addressLocality: 'Mataró'
+//     },
+//     image:
+//       'https://a.ccdn.es/coches/store_images_profesionales/123456_13032018103554.jpg',
+//     telephone: ['123456789'],
+//     geo: {
+//       '@type': 'GeoCoordinates',
+//       latitude: '41.53194',
+//       longitude: '2.442895'
+//     }
+//   }
+
+
+const About = ({
+    title = "Jmaes | No page title",
     description = "Page without description",
     image = "http://defaultimage.com",
     url = ""
-}) => {
+  }) => {
     return (
-        <Head>
-            <title>{title}</title>
-            <meta property="og:title" content={title} />
-            <meta property="og:url" content={url} />
-            <meta property="og:image" content={image} />
-            <meta property="og:description" content={description} />
-            <meta property="og:type" content="article" />
-            <meta name="twitter:card" content={image} />
-            <meta name="twitter:title" content={title} />
-            <meta name="twitter:description" content={description} />
-            <meta name="twitter:image" content={image} />
-            <meta name="description" content={description} />
-        </Head>
+        <HeadProvider>
+            <Meta property="og:title" content={title} />
+            <Meta property="og:url" content={url} />
+            <Meta property="og:image" content={image} />
+            <Meta property="og:description" content={description} />
+            <Meta property="og:type" content="article" />
+            <Meta name="twitter:card" content={image} />
+            <Meta name="twitter:title" content={title} />
+            <Meta name="twitter:description" content={description} />
+            <Meta name="twitter:image" content={image} />
+            <Meta name="description" content={description} />
+            <Title>{title}</Title>
+            <Meta name="description" content={description} />
+      About
+        </HeadProvider>
     )
 }
 
 
 
-const Abouts = () => {
-    return (
-        <Fragment>
-            <CreateHead title="My page title | James" description="This page is super important" url={location.href} image="https://heikole-art.net/wp-content/uploads/2020/05/5D4_5892.jpg" />
-            <Head>
-                <ScriptJsonLD json={{
-                    '@context': 'http://schema.org',
-                    '@type': 'AutoDealer',
-                    name: 'Dealer name | James',
-                    address: {
-                        '@type': 'PostalAddress',
-                        streetAddress: 'Avda. Maresme, 133',
-                        postalCode: '08302',
-                        addressLocality: 'Mataró'
-                    },
-                    image:
-                        'https://a.ccdn.es/coches/store_images_profesionales/123456_13032018103554.jpg',
-                    telephone: ['123456789'],
-                    geo: {
-                        '@type': 'GeoCoordinates',
-                        latitude: '41.53194',
-                        longitude: '2.442895'
-                    }
-                }} />
-            </Head>
-            from nested about
-        </Fragment>
-    )
-}
+// const CreateHead = ({
+//     title = "No page title",
+//     description = "Page without description",
+//     image = "http://defaultimage.com",
+//     url = ""
+//   }) => {
+//     return (
+//             <Head>
+//                 <meta property="og:title" content={title} />
+//                 <meta property="og:url" content={url} />
+//                 <meta property="og:image" content={image} />
+//                 <meta property="og:description" content={description} />
+//                 <meta property="og:type" content="article" />
+//                 <meta name="twitter:card" content={image} />
+//                 <meta name="twitter:title" content={title} />
+//                 <meta name="twitter:description" content={description} />
+//                 <meta name="twitter:image" content={image} />
+//                 <meta name="description" content={description} />
+//                 <title>{title}</title>
+//                 <meta name="description" content={description} />
+//             </Head>
+//     )
+// }
+
+
+// const Abouts = () => {
+//     return(
+//         <Fragment>
+//             <CreateHead title="My page title | James" description="This page is super important" url={location.href} image="https://heikole-art.net/wp-content/uploads/2020/05/5D4_5892.jpg" />
+//             from nested about
+//         </Fragment>
+//     )
+// }
 
 
 function App() {
@@ -129,7 +156,7 @@ function App() {
 
             <main>
                 <Route path="/" component={Home} />
-                <Route path="/about" component={Abouts} />
+                <Route path="/about" component={About} />
 
                 <Scope base="/help">
                     <div>
