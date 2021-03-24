@@ -99,3 +99,19 @@ useMetaArray(example);
 // <meta property="og:title" content="An awesome page">
 // <meta property="og:description" content="Everything you need to know about the topic you are looking for">
 // <meta property="og:url" content="http://example.com">
+
+
+
+
+const useMetaArrayPlay = (metaTags) => {
+    for (attributes in metaTags) {
+        // console.log(attrName)
+        // console.log(metaTags[attributes]);
+        var el = document.createElement('meta'),
+            attrName;
+        for (attrName in metaTags[attributes]) {
+            el.setAttribute(attrName, metaTags[attributes][attrName]);
+        }
+        document.head.appendChild(el);
+    }
+};
