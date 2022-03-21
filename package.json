@@ -11,6 +11,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@emotion/css": "^11.1.3",
         "@emotion/react": "^11.1.5",
         "@eo-locale/preact": "^1.4.14",
         "@s-ui/react-script-json-ld": "^1.3.0",

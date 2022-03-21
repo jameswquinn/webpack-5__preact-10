@@ -10,8 +10,6 @@
 import { h, Component, render, Fragment, createContext, hydrate, toChildArray, cloneElement, createRef, createElement, isValidElement } from "preact";
 import { useCallback, useContext, useDebugValue, useErrorBoundary, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "preact/hooks"
 import React, { unstable_batchedUpdates, Suspense, SuspenseList, lazy, createPortal, PureComponent, memo, forwardRef, Children } from "preact/compat"
-import { css, cx } from '@emotion/css'
-
 
 // /** @jsx h */
 // import { h, render, Fragment } from "preact";
@@ -19,8 +17,6 @@ import { Route, Router, Link as NavLink, useRoute, useRouter, useLocation } from
 import { Head } from '../public/head/Head'
 // import ScriptJsonLD from '@s-ui/react-script-json-ld'
 import "./styles.css";
-
-const color = 'black'
 
 
 const Scope = props => {
@@ -65,38 +61,23 @@ function ScriptJsonLD(_ref) {
     });
 }
 
-
-
-const autoDealerStructuredData = {
-        '@context': 'http://schema.org',
-        '@type': 'AutoDealer',
-        name: 'Dealer name',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: 'Avda. Maresme, 133',
-          postalCode: '08302',
-          addressLocality: 'Mataró'
-        },
-        image:
-          'https://a.ccdn.es/coches/store_images_profesionales/123456_13032018103554.jpg',
-        telephone: ['123456789']
-
-    }
-
+//   function ScriptJsonLD(_ref) {
+//     var json = _ref.json;
+//     return h(Fragment, {
+//       children: json && h("script", {
+//         dangerouslySetInnerHTML: {
+//           __html: JSON.stringify(json)
+//         },
+//         type: "application/ld+json"
+//       })
+//     });
+//   }
 
 const Home = () => {
     return (
-        <div
-        className={css`
-          padding: 32px;
-          background-color: hotpink;
-          font-size: 24px;
-          border-radius: 4px;
-          color: ${color};
-        `}
-      >
-        Hover to change color.
-      </div>
+        <Fragment>
+            home james
+        </Fragment>
     )
 }
 
@@ -133,13 +114,82 @@ function NumberList(props) {
     );
 }
 
+// export const useMeta = (attributes) => {
+//     let el = document.createElement('meta'),
+//         attrName;
+//     let fragment = document.head
+//     useEffect(() => {
+//         for (attrName in attributes) {
+//             el.setAttribute(attrName, attributes[attrName]);
+//         }
+//         fragment.appendChild(el);
+//         return () => {
+//             for (attrName in attributes) {
+//                 el.setAttribute(attrName, attributes[attrName]);
+//             }
+//             fragment.removeChild(el);
+//         }
+//     }, [fragment, el])
+// };
+
+// const useTag = (name, attributes) => {
+//     let el = document.createElement(name),
+//         attrName;
+//     let mount = document.head
+//     useEffect(() => {
+//         for (attrName in attributes) {
+//             el.setAttribute(attrName, attributes[attrName]);
+//         }
+//         mount.appendChild(el);
+//         return () => {
+//             for (attrName in attributes) {
+//                 el.setAttribute(attrName, attributes[attrName]);
+//             }
+//             mount.removeChild(el);
+//         }
+//     }, [mount, el]
+// };
 
 
-const useinternalSetAttributeTags = (_NAME, _HEADMETATAG) => {
+const useMeta = (attributes) => {
+    let el = document.createElement('meta')
+    let mount = document.head
+    useEffect(() => {
+        for (let attrName in attributes) {
+            el.setAttribute(attrName, attributes[attrName]);
+        }
+        mount.appendChild(el);
+        return () => {
+            mount.removeChild(el);
+        }
+    }, [mount])
+};
+
+const useMetaArray3 = (metaSet) => {
+    useEffect(() => {
+        let mount = document.head
+        for (let attributes in metaSet) {
+            let newNode = document.createElement('meta')
+            for (let attrName in metaSet[attributes]) {
+                newNode.setAttribute(attrName, metaSet[attributes][attrName])
+            }
+            el.setAttribute('data-head', '')
+            mount.appendChild(newNode);
+        }
+        return () => {
+            document.querySelectorAll('[data-head]').forEach(function (node) {
+                node.parentNode.removeChild(node);
+            });
+            // forEach(document.querySelectorAll('[data-head]'), node.parentNode.removeChild(node));
+        }
+    }, [])
+}
+
+export const useMetaArray = (_HEADMETATAG) => {
     useEffect(() => {
         let mount = document.head
         for (let attributes in _HEADMETATAG) {
-            let el = document.createElement(_NAME)
+            let el = document.createElement('meta')
             for (let attrName in _HEADMETATAG[attributes]) {
                 el.setAttribute(attrName, _HEADMETATAG[attributes][attrName])
             }
@@ -155,10 +205,167 @@ const useinternalSetAttributeTags = (_NAME, _HEADMETATAG) => {
 }
 
 
-const useMeta = (prop) => {
-    useinternalSetAttributeTags('meta', prop)
+// export const useMetaArray2 = (metaSet) => {
+//     useEffect(() => {
+//         let mount = document.head
+//         for (let attributes in metaSet) {
+//             let el = document.createElement('meta')
+//             for (let attrName in metaSet[attributes]) {
+//                 el.setAttribute(attrName, metaSet[attributes][attrName])
+                
+//             }
+//             el.setAttribute('data-head', '')
+//             mount.appendChild(el);
+//         }
+//         return () => {
+//             document.querySelectorAll('[data-head]').forEach(function (c) {
+//                 c.parentNode.removeChild(c);
+//             });
+//         }
+//     }, [])
+// }
+
+
+ const generateMetasMarkup = (props) => {
+    for (let attrName in attributes) {
+        document.createElement('meta').setAttribute(attrName, attributes[attrName]);
+    }
+ }
+
+
+ const useMeta2 = (attributes) => {
+    let el = document.createElement('meta')
+    let mount = document.head
+    useEffect(() => {
+        for (let attrName in attributes) {
+            el.setAttribute(attrName, attributes[attrName]);
+        }
+        mount.appendChild(el);
+        return () => {
+            mount.removeChild(el);
+        }
+    }, [mount])
+};
+
+
+const useMetaArray22 = (metaArray) => {
+    useEffect(() => {
+        for (let attributes in metaArray) {
+            useMeta2(attributes[indexOf])
+        }
+        return () => {}
+    }, [])
 }
 
+
+
+// const useMetaArray = (metaArray) => {
+//     let fragment = document.head
+//     let el = document.createElement('meta')
+//     useEffect(() => {
+//         for (let attributes in metaArray) {
+//             let prop = metaArray[attributes];
+//             for (let attrName in prop) {
+//                 el.setAttribute(attrName, prop[attrName]);
+//             }
+//             fragment.appendChild(el);
+//         }
+
+//     }, [])
+
+//     useEffect(() => {
+//         return () => {
+//             for (let attributes in metaArray) {
+//                 let prop = metaArray[attributes];
+//                 for (let attrName in prop) {
+//                     el.setAttribute(attrName, prop[attrName]);
+//                 }
+//                 fragment.removeChild(el);
+//             }
+//         }
+//     }, [])
+// }
+
+
+// const useMeta = (metaTags) => {
+//     let mount = document.head
+//     let fragment = document.createDocumentFragment();
+
+//     useEffect(() => {
+//         for (let attributes in metaArray) {
+//             //   console.log(metaArray[attributes])
+//               let prop = metaArray[attributes];
+//               var el = document.createElement('meta'),
+//                 attrName;
+//               for (let attrName in prop) {
+//                 el.setAttribute(attrName, prop[attrName]);
+//               }
+//               document.head.appendChild(el);
+//             }
+//         // return () => {
+//         //     for (attributes in metaTags) {
+//         //         for (attrName in metaTags[attributes]) {
+//         //             el.setAttribute(attrName, metaTags[attributes][attrName]);
+//         //         }
+//         //         fragment.removeChild(el);
+//         //     }
+//         // }
+//     }, [el, fragment]);
+//     return createPortal(el, mount)
+// }
+// const useMeta = (metaTags) => {
+//     let mount = document.head
+//     let fragment = document.createDocumentFragment();
+
+//     useEffect(() => {
+//         for (let attributes in metaArray) {
+//             //   console.log(metaArray[attributes])
+//               let prop = metaArray[attributes];
+//               var el = document.createElement('meta'),
+//                 attrName;
+//               for (let attrName in prop) {
+//                 el.setAttribute(attrName, prop[attrName]);
+//               }
+//               document.head.appendChild(el);
+//             }
+//         // return () => {
+//         //     for (attributes in metaTags) {
+//         //         for (attrName in metaTags[attributes]) {
+//         //             el.setAttribute(attrName, metaTags[attributes][attrName]);
+//         //         }
+//         //         fragment.removeChild(el);
+//         //     }
+//         // }
+//     }, [el, fragment]);
+//     return createPortal(el, mount)
+// }
+
+// const useMeta = (metaTags) => {
+//     let mount = document.head
+//     let fragment = document.createDocumentFragment();
+
+//     useEffect(() => {
+//         for (let attributes in metaArray) {
+//             //   console.log(metaArray[attributes])
+//               let prop = metaArray[attributes];
+//               var el = document.createElement('meta'),
+//                 attrName;
+//               for (let attrName in prop) {
+//                 el.setAttribute(attrName, prop[attrName]);
+//               }
+//               document.head.appendChild(el);
+//             }
+//         // return () => {
+//         //     for (attributes in metaTags) {
+//         //         for (attrName in metaTags[attributes]) {
+//         //             el.setAttribute(attrName, metaTags[attributes][attrName]);
+//         //         }
+//         //         fragment.removeChild(el);
+//         //     }
+//         // }
+//     }, [el, fragment]);
+//     return createPortal(el, mount)
+// }
 const About3 = () => {
     const meta = [
         { name: "keywords", content: "a, list, of, keywords" },
@@ -197,14 +404,22 @@ const About3 = () => {
         "property": "og:description",
         "content": "Everything you need to know about the topic you are looking for"
     }
+    // useTag('meta', {
+    //     "property": "og:description",
+    //     "content": "Everything you need to know about the topic you are looking for"
+    // })
+    // useMeta({
+    //     "property": "og:title",
+    //     "content": "An awesome page"
+    // })
 
+    // useMeta2(example[3])
 
-    useMeta(meta)
+    useMetaArray(meta)
 
 
     return (
         <Fragment>
-            <ScriptJsonLD json={autoDealerStructuredData} />
             Hello from About3 | James
         </Fragment>
     )
